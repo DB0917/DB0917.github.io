@@ -1,25 +1,37 @@
 ---
-title: 歡迎來到我的小角落
+title: About Me
 date: 2026-09-11
-tags: 生活 / 網站
-description: 這個 blog 正式開張了：我想把值得記下來的事，好好留在這裡。
+tags: 自我介紹
+description: 關於我
+banner: assets/images/cat.gif
 ---
 
-這是第一篇文章，也是這個網站的起點。
+## 學歷
+* 虎山實驗小學
+* 復興國中
+* 國立臺南一中
 
-## 寫作的地方
+## 興趣
+* fps ~~(天賦怪)~~
+* 音樂 (很久沒碰了)
+* 競程
 
-我會在這裡記錄技術筆記、正在做的專案，以及偶爾浮現但不想忘記的想法。
+## 目標
 
-Markdown 很適合把注意力放回內容。你可以直接在 `.md` 檔裡使用：
+* 全國資訊學科能力競賽二等獎
+* TOI 2!
+(沒有錯 Blame 是我偶像，我有訂閱[怪阿祖北京烤鴨](https://www.youtube.com/@blame8787))
 
-```md
-## 小標題
+## 競賽經歷
 
-一般段落、**粗體**、*斜體*，還有 [連結](https://example.com)。
+* 2025/Jun. APCS 4/4 
+* 114 學年度資訊學科能力競賽 南區賽 第六名
+* 2026 TOI 初選 Rank. 30 
+* 2026 成大邀請賽決賽 Rank. 2
+* 敬請期待...(?)
 
-- 清單項目
-- 另一個項目
-```
+## OJ
 
-> 希望這裡能慢慢長成一個有趣的地方。
+* [Codeforces](https://codeforces.com/profile/DB0917)
+* [AtCoder](https://atcoder.jp/users/DB0917)
+* [TOJ](https://toj.tfcis.org/oj/acct/9683/)

@@ -5,16 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="DB0917 的文章。" />
     <title>文章 | DB0917</title>
+    <!-- 深色模式暫時停用：<script src="assets/js/theme.js"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.css" integrity="sha384-JctiRyLzXCrSoOOzFlSoWLdyzQl7OrrRnhyeBmzB6ZWtcjccUyc8lCQJqIbs3uQX" crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/custom.css" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="./" aria-label="回到首頁">DB0917<span>.</span></a>
-      <a class="back-link" href="./">← 所有文章</a>
+      <div class="header-actions">
+        <a class="back-link" href="./">← 所有文章</a>
+        <a class="back-link" href="tags.html">分類</a>
+        <!-- 深色模式暫時停用：
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切換夜間模式" title="切換夜間模式">
+          <span aria-hidden="true">☾</span>
+        </button> -->
+      </div>
     </header>
 
     <main class="article-shell">
@@ -24,8 +33,9 @@
     </main>
 
     <footer class="site-footer">© <span id="year"></span> DB0917</footer>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="assets/js/main.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.js" integrity="sha384-+7Keh381hSkXmXqnjC0JBM/kzsN6TFj+wMKychSLjTvJ8/0ElMde2uKl8i6p6Buj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/contrib/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"></script>
+    <script src="assets/js/main.js"></script>
   </body>
 </html>
