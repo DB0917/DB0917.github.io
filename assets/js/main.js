@@ -176,7 +176,7 @@ function renderMarkdown(markdown) {
   let code = null;
   let callout = null;
   const calloutLabels = {
-    success: "📄例題",
+    success: "例題",
     info: "資訊",
     warning: "注意",
     danger: "重要",

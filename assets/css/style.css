@@ -106,7 +106,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
     linear-gradient(180deg, transparent 48%, var(--paper) 100%);
 }
 .article-lead { margin: 20px 0 0; color: var(--muted); font-size: 1.1rem; }
-.article-content { font-size: 1.03rem; }
+.article-content { font-size: 1.3rem; }
 .article-content h2 { margin: 3.4rem 0 1rem; font-size: 1.65rem; }
 .article-content h3 { margin: 2.4rem 0 0.8rem; font-size: 1.25rem; }
 .article-content p, .article-content ul, .article-content ol { margin: 0 0 1.25rem; }
@@ -115,7 +115,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .article-content hr { margin: 2.75rem 0; border: 0; border-top: 1px solid var(--line); }
 .markdown-callout { margin: 2rem 0; padding: 18px 22px; border-left: 4px solid; border-radius: 4px; background: var(--code-background); }
 .markdown-callout > :last-child { margin-bottom: 0; }
-.markdown-callout-title { margin: 0 0 8px; font-weight: 700; }
+.markdown-callout-title { margin: 0 0 8px; font-weight: 700; font-size: 2rem;}
 .markdown-callout-content > :last-child { margin-bottom: 0; }
 .markdown-callout-success { border-color: #3c8a5a; background: #e8f4eb; }
 .markdown-callout-info { border-color: #3074b8; background: #e7f1fb; }
