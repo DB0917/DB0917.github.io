@@ -150,12 +150,22 @@ function splitFrontmatter(markdown) {
 }
 
 function renderInlineMarkdown(text) {
-  return escapeHtml(text)
+  const mathFragments = [];
+  const protectedText = String(text).replace(
+    /\$\$[\s\S]*?\$\$|\$[^$\n]+?\$|\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\]|\\begin\{([a-zA-Z*]+)\}[\s\S]*?\\end\{\1\}/g,
+    (fragment) => {
+      const token = "@@MATH" + mathFragments.length + "@@";
+      mathFragments.push(escapeHtml(fragment));
+      return token;
+    }
+  );
+  return escapeHtml(protectedText)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/~~([^~]+)~~/g, "<del>$1</del>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+    .replace(/@@MATH(\d+)@@/g, (_, index) => mathFragments[Number(index)]);
 }
 
 function renderMarkdown(markdown) {
@@ -166,7 +176,7 @@ function renderMarkdown(markdown) {
   let code = null;
   let callout = null;
   const calloutLabels = {
-    success: "成功",
+    success: "📄例題",
     info: "資訊",
     warning: "注意",
     danger: "重要",
@@ -174,7 +184,12 @@ function renderMarkdown(markdown) {
   };
 
   const flushParagraph = () => {
-    if (paragraph.length) html.push(`<p>${renderInlineMarkdown(paragraph.join(" "))}</p>`);
+    if (paragraph.length) {
+      const content = renderInlineMarkdown(paragraph.join("\n"))
+        .replace(/\\\n/g, "<br>\n")
+        .replace(/\n/g, " ");
+      html.push(`<p>${content}</p>`);
+    }
     paragraph = [];
   };
   const flushList = () => {
@@ -184,7 +199,7 @@ function renderMarkdown(markdown) {
   };
 
   lines.forEach((line) => {
-    if (line.startsWith("```")) {
+    if (line.startsWith("```") && !callout) {
       flushParagraph();
       flushList();
       if (code) {
@@ -195,13 +210,37 @@ function renderMarkdown(markdown) {
       }
       return;
     }
-    if (code) {
+    if (code && !callout) {
       code.lines.push(line);
+      return;
+    }
+    if (callout) {
+      if (line.trim() === ":::") {
+        const title = callout.title || calloutLabels[callout.kind];
+        html.push('<aside class="markdown-callout markdown-callout-' + callout.kind + '"><p class="markdown-callout-title">' + escapeHtml(title) + '</p><div class="markdown-callout-content">' + renderMarkdown(callout.lines.join("\n")) + "</div></aside>");
+        callout = null;
+      } else {
+        callout.lines.push(line);
+      }
       return;
     }
     if (!line.trim()) {
       flushParagraph();
       flushList();
+      return;
+    }
+    const calloutStart = line.match(/^:::\s*(success|succes|info|warning|danger|note)(?:\s+(.+))?\s*$/i);
+    if (calloutStart) {
+      flushParagraph();
+      flushList();
+      const kind = calloutStart[1].toLowerCase() === "succes" ? "success" : calloutStart[1].toLowerCase();
+      callout = { kind, title: calloutStart[2]?.trim(), lines: [] };
+      return;
+    }
+    if (/^(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) {
+      flushParagraph();
+      flushList();
+      html.push("<hr />");
       return;
     }
     const heading = line.match(/^(#{1,3})\s+(.+)$/);
@@ -233,6 +272,10 @@ function renderMarkdown(markdown) {
   flushParagraph();
   flushList();
   if (code) html.push(`<pre><code>${escapeHtml(code.lines.join("\n"))}</code></pre>`);
+  if (callout) {
+    const title = callout.title || calloutLabels[callout.kind];
+    html.push('<aside class="markdown-callout markdown-callout-' + callout.kind + '"><p class="markdown-callout-title">' + escapeHtml(title) + '</p><div class="markdown-callout-content">' + renderMarkdown(callout.lines.join("\n")) + "</div></aside>");
+  }
   return html.join("\n");
 }
 
