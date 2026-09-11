@@ -106,7 +106,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
     linear-gradient(180deg, transparent 48%, var(--paper) 100%);
 }
 .article-lead { margin: 20px 0 0; color: var(--muted); font-size: 1.1rem; }
-.article-content { font-size: 1.3rem; }
+.article-content { font-size: 1.1rem; }
 .article-content h2 { margin: 3.4rem 0 1rem; font-size: 1.65rem; }
 .article-content h3 { margin: 2.4rem 0 0.8rem; font-size: 1.25rem; }
 .article-content p, .article-content ul, .article-content ol { margin: 0 0 1.25rem; }
