@@ -165,7 +165,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .article-meta { color: var(--muted); font: 0.72rem var(--mono); }
 .article h1 { margin-top: 12px; font-size: clamp(2.4rem, 6vw, 4.8rem); }
 .article-lead { margin: 20px 0 0; color: var(--muted); font-size: 1.1rem; }
-.article-content { font-size: 1.0rem; }
+.article-content { font-size: 1.15rem; }
 .article-content h2 { margin: 3.4rem 0 1rem; font-size: 1.65rem; }
 .article-content h3 { margin: 2.4rem 0 0.8rem; font-size: 1.25rem; }
 .article-content p, .article-content ul, .article-content ol { margin: 0 0 1.25rem; }
@@ -181,9 +181,59 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .markdown-callout-warning { border-color: #b7791f; background: #fdf4df; }
 .markdown-callout-danger { border-color: #bc3f3f; background: #fbeaea; }
 .markdown-callout-note { border-color: #747982; background: #eff0f2; }
-.article-content pre { overflow-x: auto; padding: 20px; background: #202724; color: #eff4ed; border-radius: 4px; font-size: 0.88rem; }
+/* =========================================
+   程式碼區塊美化 (Mac OS Window Style)
+   ========================================= */
+
+/* 1. 大區塊程式碼 (Code Block) */
+.article-content pre {
+  position: relative;
+  overflow-x: auto;
+  padding: 46px 20px 20px; /* 頂部留白給 Mac 點點 */
+  margin: 2.5rem 0;
+  background-color: #f4f6f3; /* 淺色模式下柔和的背景 */
+  color: #171c1a; /* 淺色模式下的文字顏色 */
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  
+  /* 用背景漸層畫出 Mac 視窗的紅黃綠三點 */
+  background-image: 
+    radial-gradient(circle at 20px 24px, #ff5f56 6px, transparent 6.5px),
+    radial-gradient(circle at 40px 24px, #ffbd2e 6px, transparent 6.5px),
+    radial-gradient(circle at 60px 24px, #27c93f 6px, transparent 6.5px);
+  background-repeat: no-repeat;
+}
+
+/* 深色模式下的程式碼區塊 */
+:root[data-theme="dark"] .article-content pre {
+  background-color: #111714; /* 深邃的質感黑 */
+  color: #e0e6e2;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 2. 美化程式碼區塊內的滾動條 */
+.article-content pre::-webkit-scrollbar { height: 8px; }
+.article-content pre::-webkit-scrollbar-track { background: transparent; }
+.article-content pre::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+.article-content pre::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
 .article-content code { font-family: var(--mono); }
-.article-content :not(pre) > code { padding: 0.1em 0.35em; background: var(--code-background); border-radius: 3px; }
+
+/* 3. 行內程式碼 (Inline Code) 的美化 */
+.article-content :not(pre) > code {
+  padding: 0.15em 0.4em;
+  background-color: var(--code-background);
+  color: var(--accent); /* 用你的主題橘紅色讓重點字跳出來 */
+  font-weight: 500;
+  border-radius: 6px;
+  font-size: 0.88em;
+  border: 1px solid var(--line);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 .article-content img { display: block; max-width: 100%; height: auto; margin: 2rem auto; }
 
 /* 8. RWD 響應式設定 */
