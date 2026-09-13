@@ -50,10 +50,24 @@ function renderHomeBanner() {
   const image = document.querySelector("#home-banner-image");
   if (!banner || !image) return;
 
-  // 1. 優先使用 window.BLOG_CONFIG 指定的圖片
-  // 2. 若沒指定，則自動呼叫 getRandomBanner() 抽隨機圖片
   const config = window.BLOG_CONFIG?.homeBanner;
-  const finalSrc = config?.src || (typeof getRandomBanner === "function" ? getRandomBanner() : "");
+  const srcSetting = config?.src;
+
+  let finalSrc = "";
+
+  // 1. 如果設定為 "none" -> 直接隱藏首頁橫幅
+  if (srcSetting === "none") {
+    banner.hidden = true;
+    return;
+  } 
+  // 2. 如果設定為 "random"、留空，或是沒寫 src -> 抽隨機圖片
+  else if (!srcSetting || srcSetting === "random") {
+    finalSrc = typeof getRandomBanner === "function" ? getRandomBanner() : "";
+  } 
+  // 3. 指定了具體圖片路徑 -> 顯示固定圖片
+  else {
+    finalSrc = srcSetting;
+  }
 
   if (!finalSrc) return;
 
@@ -374,3 +388,9 @@ renderHomeBanner();
 renderPostList();
 renderTagList();
 renderArticle();
+
+// 強制關閉瀏覽器的歷史滾動記憶，並在載入時滾動到最頂端
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);

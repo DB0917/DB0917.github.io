@@ -1,6 +1,6 @@
 window.BLOG_CONFIG = {
   homeBanner: {
-    src: "assets/images/haimiya.jpg",
+    src: "random",
     alt: "首頁橫幅的替代文字"
   }
 };
