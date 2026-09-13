@@ -165,7 +165,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .article-meta { color: var(--muted); font: 0.72rem var(--mono); }
 .article h1 { margin-top: 12px; font-size: clamp(2.4rem, 6vw, 4.8rem); }
 .article-lead { margin: 20px 0 0; color: var(--muted); font-size: 1.1rem; }
-.article-content { font-size: 1.15rem; }
+.article-content { font-size: 1.2rem; }
 .article-content h2 { margin: 3.4rem 0 1rem; font-size: 1.65rem; }
 .article-content h3 { margin: 2.4rem 0 0.8rem; font-size: 1.25rem; }
 .article-content p, .article-content ul, .article-content ol { margin: 0 0 1.25rem; }
@@ -248,4 +248,57 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
   .post-card p { grid-column: 1 / -1; margin: 3px 0 0; }
   .article-shell { width: min(calc(100% - 32px), 760px); }
   .tags-shell { width: min(calc(100% - 32px), 900px); }
+}
+
+/* =========================================
+   頁面切換過渡動畫 (Page Transitions)
+   ========================================= */
+
+/* 1. 前端黑科技：原生跨頁面過渡支援 (Chrome 126+ 等現代瀏覽器自動支援) */
+@view-transition {
+  navigation: auto;
+}
+
+/* 2. 所有瀏覽器通用的進入動畫 (載入頁面時整頁淡入) */
+body {
+  animation: pageFadeIn 0.5s ease-out forwards;
+}
+
+/* 3. 準備離開頁面時的狀態 (由 JS 觸發) */
+body.is-leaving {
+  /* 稍微縮小並淡出，營造深邃感 */
+  animation: pageFadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-10px) scale(0.98); }
+}
+
+/* =========================================
+   防暴雷 (Spoiler Text) 樣式
+   ========================================= */
+.article-content .spoiler {
+  background-color: var(--ink);
+  color: var(--ink);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  margin: 0 0.15em;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* 滑鼠懸浮、獲得焦點或點擊時顯示內容 */
+.article-content .spoiler:hover,
+.article-content .spoiler:focus,
+.article-content .spoiler:active {
+  background-color: var(--code-background);
+  color: var(--ink);
+  user-select: text;
 }

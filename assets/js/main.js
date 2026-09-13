@@ -159,12 +159,27 @@ function renderInlineMarkdown(text) {
       return token;
     }
   );
+
   return escapeHtml(protectedText)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/~~([^~]+)~~/g, "<del>$1</del>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+    .replace(/\|\|([^|]+)\|\|/g, '<span class="spoiler" tabindex="0">$1</span>')
+    .replace(/\[([^\]]+)\]\{([a-zA-Z0-9#,-]+)\}/g, (match, content, color) => {
+      // 支援主題變數：如果輸入 accent、muted 等，自動轉成 var(--accent)
+      const themeVars = ['accent', 'muted', 'ink', 'paper'];
+      const targetColor = themeVars.includes(color.toLowerCase()) ? `var(--${color})` : color;
+      return `<span style="color: ${targetColor}; font-weight: 500;">${content}</span>`;
+    })
+    /* 1. 新增圖片處理語法：![alt](url) */
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+    /* 2. 修復超連結語法：支援相對路徑，並只對外連網站加 target="_blank" */
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, title, url) => {
+      const isExternal = /^https?:\/\//i.test(url);
+      const target = isExternal ? ' target="_blank" rel="noreferrer"' : '';
+      return `<a href="${url}"${target}>${title}</a>`;
+    })
     .replace(/@@MATH(\d+)@@/g, (_, index) => mathFragments[Number(index)]);
 }
 
