@@ -132,45 +132,97 @@ async function renderPostList() {
   }
 }
 
-async function renderTagList() {
-  const list = document.querySelector("#tag-list");
-  if (!list) return;
+async function renderArchivePage() {
+  const archiveList = document.querySelector("#archive-list");
+  const sidebarTagList = document.querySelector("#sidebar-tag-list");
+  const resetBtn = document.querySelector("#reset-filter");
+  
+  // 如果不是歸檔頁面，就直接跳出
+  if (!archiveList || !sidebarTagList) return;
+  
   try {
     const posts = await getPosts();
-    const groups = new Map();
-    posts.forEach((post) => {
-      parseTags(post.tags).forEach((tag) => {
-        if (!groups.has(tag)) groups.set(tag, []);
-        groups.get(tag).push(post);
+    
+    // 1. 確保文章由新到舊排序
+    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // 2. 將文章依照「年份」分組
+    const postsByYear = new Map();
+    posts.forEach(post => {
+      const year = new Date(post.date).getFullYear();
+      if (!postsByYear.has(year)) postsByYear.set(year, []);
+      postsByYear.get(year).push(post);
+    });
+
+    const sortedYears = Array.from(postsByYear.keys()).sort((a, b) => b - a);
+    
+    // 3. 渲染左側年份時間軸
+    archiveList.innerHTML = sortedYears.map(year => `
+      <div class="archive-year-group">
+        <h2 class="archive-year">${year}</h2>
+        <div class="post-list">
+          ${postsByYear.get(year).map(post => `
+            <a class="post-card" href="post.html?slug=${encodeURIComponent(post.slug)}">
+              <time class="post-date" datetime="${escapeHtml(post.date)}">${formatDate(post.date)}</time>
+              <h3>${escapeHtml(post.title)}</h3>
+              <span class="post-tags" data-tags="${escapeHtml(post.tags.join(","))}">${post.tags.map(escapeHtml).join(" · ")}</span>
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+
+    // 4. 渲染右側所有出現過的標籤
+    const allTags = new Set();
+    posts.forEach(post => parseTags(post.tags).forEach(tag => allTags.add(tag)));
+    
+    const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, "zh-Hant"));
+    sidebarTagList.innerHTML = sortedTags.map(tag => `
+      <button class="sidebar-tag" data-tag="${escapeHtml(tag)}"># ${escapeHtml(tag)}</button>
+    `).join("");
+
+    // 5. 加入「點擊標籤動態篩選」黑魔法
+    const tagButtons = document.querySelectorAll('.sidebar-tag');
+    tagButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedTag = btn.getAttribute('data-tag');
+        
+        // 變更標籤的視覺狀態
+        tagButtons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (resetBtn) resetBtn.style.display = 'block';
+
+        // 篩選左側文章
+        document.querySelectorAll('#archive-list .post-card').forEach(card => {
+          const tagsText = card.querySelector('.post-tags').getAttribute('data-tags');
+          if (tagsText && tagsText.includes(selectedTag)) {
+            card.style.display = 'block'; // 顯示
+          } else {
+            card.style.display = 'none';  // 隱藏
+          }
+        });
+
+        // 如果該年份沒有任何顯示的文章，就把那整個年份標題也藏起來
+        document.querySelectorAll('.archive-year-group').forEach(group => {
+          const visiblePosts = Array.from(group.querySelectorAll('.post-card')).filter(card => card.style.display !== 'none');
+          group.style.display = visiblePosts.length === 0 ? 'none' : 'block';
+        });
       });
     });
-    const tags = [...groups.keys()].sort((first, second) => first.localeCompare(second, "zh-Hant"));
-    if (!tags.length) {
-      list.innerHTML = '<p class="error">目前還沒有已分類的文章。</p>';
-      return;
+
+    // 6. 重置篩選按鈕
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        tagButtons.forEach(b => b.classList.remove('is-active'));
+        resetBtn.style.display = 'none';
+        
+        document.querySelectorAll('#archive-list .post-card').forEach(card => card.style.display = 'block');
+        document.querySelectorAll('.archive-year-group').forEach(group => group.style.display = 'block');
+      });
     }
-    list.innerHTML = tags.map((tag) => {
-      const postsInTag = groups.get(tag);
-      return `
-        <section class="tag-group" aria-labelledby="tag-${encodeURIComponent(tag)}">
-          <div class="tag-heading">
-            <h2 id="tag-${encodeURIComponent(tag)}"># ${escapeHtml(tag)}</h2>
-            <span>${postsInTag.length} POSTS</span>
-          </div>
-          <div class="post-list">
-            ${postsInTag.map((post) => `
-              <a class="post-card" href="post.html?slug=${encodeURIComponent(post.slug)}">
-                <time class="post-date" datetime="${escapeHtml(post.date)}">${formatDate(post.date)}</time>
-                <h3>${escapeHtml(post.title)}</h3>
-                <p>${escapeHtml(post.excerpt)}</p>
-              </a>
-            `).join("")}
-          </div>
-        </section>
-      `;
-    }).join("");
+
   } catch (error) {
-    list.innerHTML = '<p class="error">分類目前無法載入，請稍後再試。</p>';
+    archiveList.innerHTML = '<p class="error">歸檔目前無法載入，請稍後再試。</p>';
   }
 }
 
@@ -386,7 +438,7 @@ async function renderArticle() {
 
 renderHomeBanner();
 renderPostList();
-renderTagList();
+renderArchivePage();
 renderArticle();
 
 // 強制關閉瀏覽器的歷史滾動記憶，並在載入時滾動到最頂端

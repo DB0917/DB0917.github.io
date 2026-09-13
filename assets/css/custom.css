@@ -4,3 +4,88 @@
   :root { --accent: #1565c0; }
   .intro h1 { color: #20302a; }
 */
+
+/* =========================================
+   歸檔頁面 (Archive Layout)
+   ========================================= */
+.archive-shell {
+  max-width: var(--max-width, 1000px);
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.archive-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+/* 桌面版雙欄佈局：左側文章佔 2 份，右側標籤佔 1 份 */
+@media (min-width: 800px) {
+  .archive-container {
+    grid-template-columns: 2.5fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* 年份時間軸標題 */
+.archive-year {
+  font-family: var(--mono);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 3rem 0 1.5rem;
+  border-bottom: 2px dashed var(--line);
+  padding-bottom: 0.5rem;
+}
+.archive-year:first-child { margin-top: 0; }
+
+/* 側邊欄與標籤 */
+.sidebar-sticky {
+  position: sticky;
+  top: 6rem; /* 滑動時停留在距離螢幕上方 6rem 處 */
+  background: var(--code-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.sidebar-sticky h2 { margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 1.25rem; }
+
+.sidebar-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sidebar-tag {
+  padding: 0.3em 0.8em;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  color: var(--ink);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 標籤被選中或懸浮時的狀態 */
+.sidebar-tag:hover, .sidebar-tag.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--code-background);
+}
+
+/* 重置按鈕 */
+.reset-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:hover { background: var(--line); color: var(--ink); }
