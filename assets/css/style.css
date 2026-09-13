@@ -236,6 +236,7 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 }
 .article-content img { display: block; max-width: 100%; height: auto; margin: 2rem auto; }
 
+
 /* 8. RWD 響應式設定 */
 @media (max-width: 620px) {
   .site-header, main, .site-footer { width: min(calc(100% - 32px), var(--page-width)); }
