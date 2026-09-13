@@ -1,3 +1,17 @@
+// 隨機橫幅圖片庫 (有新增或修改照片時，在這裡更新檔名)
+const bannerImages = [
+  "assets/images/banners/1.jpg",
+  "assets/images/banners/2.jpg",
+  "assets/images/banners/3.jpg"
+];
+
+// 取得隨機橫幅路徑的函式
+function getRandomBanner() {
+  if (!bannerImages.length) return "";
+  const randomIndex = Math.floor(Math.random() * bannerImages.length);
+  return bannerImages[randomIndex];
+}
+
 const postsUrl = "data/posts.json";
 const blogConfig = window.BLOG_CONFIG || {};
 
@@ -34,12 +48,19 @@ const formatDate = (date) => new Intl.DateTimeFormat("zh-TW", {
 function renderHomeBanner() {
   const banner = document.querySelector("#home-banner");
   const image = document.querySelector("#home-banner-image");
-  const config = blogConfig.homeBanner;
-  if (!banner || !image || !config?.src) return;
-  image.src = config.src;
-  image.alt = config.alt || "";
+  if (!banner || !image) return;
+
+  // 1. 優先使用 window.BLOG_CONFIG 指定的圖片
+  // 2. 若沒指定，則自動呼叫 getRandomBanner() 抽隨機圖片
+  const config = window.BLOG_CONFIG?.homeBanner;
+  const finalSrc = config?.src || (typeof getRandomBanner === "function" ? getRandomBanner() : "");
+
+  if (!finalSrc) return;
+
+  image.src = finalSrc;
+  image.alt = config?.alt || "首頁橫幅";
   banner.hidden = false;
-  banner.parentElement.classList.add("has-banner");
+  banner.parentElement?.classList.add("has-banner");
 }
 
 function parseTags(tags) {
@@ -320,11 +341,25 @@ async function renderArticle() {
     if (!response.ok) throw new Error("文章不存在");
     const { metadata, content } = splitFrontmatter(await response.text());
     document.title = `${metadata.title || "文章"} | DB0917`;
+
+    /* 橫幅邏輯：
+       1. 如果 .md 沒寫 banner 或者是 banner: random -> 自動抽隨機圖片
+       2. 如果 .md 寫了 banner: none -> 不顯示橫幅
+       3. 如果 .md 寫了具體圖片路徑 (如 banner: assets/images/custom.png) -> 優先顯示該指定圖片 */
+    let finalBanner = "";
+    if (metadata.banner === "none") {
+      finalBanner = "";
+    } else if (metadata.banner && metadata.banner !== "random") {
+      finalBanner = metadata.banner;
+    } else {
+      finalBanner = getRandomBanner();
+    }
+
     article.innerHTML = `
-      <header class="article-header${metadata.banner ? " has-banner" : ""}">
+      <header class="article-header${finalBanner ? " has-banner" : ""}">
         <p class="article-meta">${metadata.date ? formatDate(metadata.date) : ""}${metadata.tags ? ` / ${escapeHtml(metadata.tags)}` : ""}</p>
         <h1>${escapeHtml(metadata.title || "未命名文章")}</h1>
-        ${metadata.banner ? `<figure class="banner article-banner"><img src="${escapeHtml(metadata.banner)}" alt="${escapeHtml(metadata.bannerAlt || "")}" /></figure>` : ""}
+        ${finalBanner ? `<figure class="banner article-banner"><img src="${escapeHtml(finalBanner)}" alt="${escapeHtml(metadata.bannerAlt || "")}" /></figure>` : ""}
         ${metadata.description ? `<p class="article-lead">${escapeHtml(metadata.description)}</p>` : ""}
       </header>
       <div class="article-content">${renderMarkdown(content)}</div>

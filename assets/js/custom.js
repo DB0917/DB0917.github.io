@@ -1,3 +1,10 @@
+window.BLOG_CONFIG = {
+  homeBanner: {
+    src: "assets/images/haimiya.jpg",
+    alt: "首頁橫幅的替代文字"
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // 取得網頁中所有的連結 (a 標籤)
   const links = document.querySelectorAll('a');
@@ -31,10 +38,3 @@ window.addEventListener('pageshow', (event) => {
     document.body.classList.remove('is-leaving');
   }
 });
-
-window.BLOG_CONFIG = {
-  homeBanner: {
-    src: "assets/images/haimiya.jpg",
-    alt: "首頁橫幅的替代文字"
-  }
-};
