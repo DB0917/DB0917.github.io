@@ -9,7 +9,7 @@
   --code-background: #e8ebe4;
   --display: "Noto Sans TC", sans-serif;
   --mono: "DM Mono", monospace;
-  --page-width: 1680px; /* 恢復原版 1680px 寬度 */
+  --page-width: 1680px;
   --nav-bg: rgba(250, 249, 246, 0.75);
 }
 
@@ -25,7 +25,9 @@
   --nav-bg: rgba(13, 20, 17, 0.75);
 }
 
-/* 1. 全域設定與防閃爍過渡 */
+/* =========================================
+   1. 全域設定與防閃爍過渡
+   ========================================= */
 * { box-sizing: border-box; }
 *, *::before, *::after {
   transition-property: background-color, color, border-color, box-shadow;
@@ -45,7 +47,9 @@ body {
 ::selection { background: var(--accent-glow); color: var(--accent); }
 a { color: inherit; text-underline-offset: 0.2em; transition: color 0.2s ease; }
 
-/* 2. 版面與毛玻璃導覽列 */
+/* =========================================
+   2. 版面與毛玻璃導覽列
+   ========================================= */
 .site-header, main, .site-footer { width: min(calc(100% - 48px), var(--page-width)); margin-inline: auto; }
 .site-header { 
   position: sticky; top: 0; z-index: 100;
@@ -75,13 +79,14 @@ nav a:hover::after, nav a.is-active::after { width: 100%; }
 }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); transform: rotate(15deg) scale(1.1); }
 
-/* 3. 進場動畫 */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 4. 原版首頁介紹與較高的橫幅 (恢復原版 padding 與字體設定) */
+/* =========================================
+   3. 首頁介紹與橫幅
+   ========================================= */
 .intro { position: relative; isolation: isolate; overflow: hidden; padding: clamp(72px, 13vw, 144px) 0 88px; animation: fadeUp 0.8s ease-out forwards; }
 .intro > :not(.banner-home) { position: relative; z-index: 2; }
 .intro.has-banner { padding: clamp(88px, 15vw, 168px) 0 112px; color: var(--ink); }
@@ -92,22 +97,23 @@ h1, h2, h3 { line-height: 1.25; }
 h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weight: 700; letter-spacing: -0.06em; color: var(--ink); }
 .intro-copy { max-width: 420px; margin: 28px 0 0; color: var(--muted); font-size: 1.05rem; }
 
-/* 5. 修復背景圖片圖層與自動適應漸層 (保留原版遮罩數值) */
 .banner { width: 100%; margin: 28px 0 0; overflow: hidden; background: var(--code-background); border-radius: 4px; }
-.banner-home, .article-header.has-banner .article-banner { position: absolute; inset: 0; z-index: 0; height: 100%; max-width: none; margin: 0; border-radius: 0; background: #202724; }
-.banner-home img, .article-header.has-banner .article-banner img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.banner-home::after, .article-header.has-banner .article-banner::after {
+.banner-home { position: absolute; inset: 0; z-index: 0; height: 100%; max-width: none; margin: 0; border-radius: 0; background: #202724; }
+.banner-home img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.banner-home::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(90deg, rgba(250, 249, 246, 0.94) 0%, rgba(250, 249, 246, 0.78) 38%, rgba(250, 249, 246, 0.32) 72%, rgba(250, 249, 246, 0.08) 100%), linear-gradient(180deg, transparent 48%, var(--paper) 100%);
 }
-:root[data-theme="dark"] .banner-home::after, :root[data-theme="dark"] .article-header.has-banner .article-banner::after {
+:root[data-theme="dark"] .banner-home::after {
   background: linear-gradient(90deg, rgba(13, 20, 17, 0.88) 0%, rgba(13, 20, 17, 0.7) 38%, rgba(13, 20, 17, 0.28) 72%, rgba(13, 20, 17, 0.06) 100%), linear-gradient(180deg, transparent 48%, var(--paper) 100%);
 }
 :root[data-theme="dark"] .intro.has-banner { color: #fff; }
-:root[data-theme="dark"] .intro.has-banner .intro-copy, :root[data-theme="dark"] .article-header.has-banner .article-meta, :root[data-theme="dark"] .article-header.has-banner .article-lead { color: rgba(255, 255, 255, 0.84); }
+:root[data-theme="dark"] .intro.has-banner .intro-copy { color: rgba(255, 255, 255, 0.84); }
 :root[data-theme="dark"] .intro.has-banner .eyebrow { color: #fff; }
 
-/* 6. 文章列表與動態卡片 */
+/* =========================================
+   4. 文章列表與動態卡片
+   ========================================= */
 .posts-section { padding: 0 0 112px; animation: fadeUp 0.8s ease-out 0.2s backwards; }
 .section-heading { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
 .section-heading h2 { margin: 0; font-size: 1.2rem; }
@@ -137,7 +143,9 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .post-card p { grid-column: 2; margin: -16px 0 0; color: var(--muted); font-size: 0.92rem; }
 .post-tags { text-align: right; }
 
-/* 7. 關於區塊 */
+/* =========================================
+   5. 關於區塊與 Footer
+   ========================================= */
 .about { padding: 72px 0; border-top: 1px solid var(--line); animation: fadeUp 0.8s ease-out 0.4s backwards; }
 .about h2 { margin: 0 0 14px; font-size: clamp(1.7rem, 4vw, 2.4rem); }
 .about p:not(.eyebrow) { color: var(--muted); }
@@ -148,23 +156,95 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .error { color: var(--accent); }
 
 /* =========================================
-   保留原版的文章內頁樣式 (Tags & Article Shell)
+   6. 文章內頁與橫幅修正 (無縫貼頂)
    ========================================= */
-.tags-shell { width: min(calc(100% - 48px), 900px); padding: clamp(58px, 9vw, 104px) 0; }
-.tags-section > h1 { margin-bottom: 56px; font-size: clamp(2.8rem, 7vw, 5.5rem); }
-.tag-group + .tag-group { margin-top: 64px; }
-.tag-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); }
-.tag-heading h2 { margin: 0; font-size: 1.35rem; }
-.tag-heading span { color: var(--muted); font: 0.75rem var(--mono); }
-
 .article-shell { width: min(calc(100% - 48px), 1680px); padding: clamp(58px, 9vw, 104px) 0; }
 .article-header { position: relative; isolation: isolate; margin-bottom: 56px; }
 .article-header > :not(.article-banner) { position: relative; z-index: 2; }
-.article-header.has-banner { padding: clamp(56px, 10vw, 96px); overflow: hidden; color: var(--ink); display: flex; flex-direction: column; justify-content: center; }
-.article-header.has-banner .article-meta, .article-header.has-banner .article-lead { color: var(--muted); }
+
+/* 利用負邊距抵銷外層 padding，讓橫幅貼齊上方 */
+.article-header.has-banner {
+  margin-top: calc(-1 * clamp(58px, 9vw, 104px)); 
+  margin-bottom: 3rem;
+  padding: 0;
+  display: block; 
+}
+
+/* 橫幅圖片區塊設定 */
+.article-header.has-banner .article-banner {
+  width: 100%;
+  max-height: 500px;
+  margin: 0;
+  border-radius: 0 0 16px 16px; /* 只保留下方圓角 */
+  position: relative;
+  overflow: hidden;
+}
+
+.article-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center !important; 
+  display: block;
+}
+
+/* 替文章橫幅加上與首頁完全相同的雙重漸層 (左側漸淡 + 底部融合) */
+.article-header.has-banner .article-banner::after {
+  content: ""; 
+  position: absolute; 
+  inset: 0; 
+  z-index: 1; 
+  pointer-events: none;
+  background: 
+    linear-gradient(90deg, rgba(250, 249, 246, 0.94) 0%, rgba(250, 249, 246, 0.78) 38%, rgba(250, 249, 246, 0.32) 72%, rgba(250, 249, 246, 0.08) 100%), 
+    linear-gradient(180deg, transparent 48%, var(--paper) 100%);
+}
+
+/* 支援深色模式的雙重漸層 */z
+:root[data-theme="dark"] .article-header.has-banner .article-banner::after {
+  background: 
+    linear-gradient(90deg, rgba(13, 20, 17, 0.88) 0%, rgba(13, 20, 17, 0.7) 38%, rgba(13, 20, 17, 0.28) 72%, rgba(13, 20, 17, 0.06) 100%), 
+    linear-gradient(180deg, transparent 48%, var(--paper) 100%);
+}
+
+/* 橫幅出處毛玻璃標籤 */
+.banner-credit {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.banner-credit a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.5); transition: all 0.2s ease; }
+.banner-credit a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* 文章標題區塊與圖片的安全距離 */
+.article-header.has-banner .article-header-text {
+  /* 把原本的 padding-top: 2rem 改成 0 */
+  padding-top: 0; 
+  /* 加入負邊距把整個標題區塊往上拉 */
+  margin-top: -15rem; 
+  color: var(--ink);
+  /* 確保文字不會被圖片蓋住 */
+  position: relative; 
+  z-index: 2; 
+}
+:root[data-theme="dark"] .article-header.has-banner .article-header-text { color: #fff; }
+
 .article-meta { color: var(--muted); font: 0.72rem var(--mono); }
-.article h1 { margin-top: 12px; font-size: clamp(2.4rem, 6vw, 4.8rem); }
-.article-lead { margin: 20px 0 0; color: var(--muted); font-size: 1.1rem; }
+.article h1 { margin-top: 20px; font-size: clamp(2.4rem, 6vw, 4.8rem); }
+.article-lead { margin: 35px 0 0; color: var(--muted); font-size: 1.1rem; }
+
+/* =========================================
+   7. 文章內容排版 (Typography)
+   ========================================= */
 .article-content { font-size: 1.2rem; }
 .article-content h2 { margin: 3.4rem 0 1rem; font-size: 1.65rem; }
 .article-content h3 { margin: 2.4rem 0 0.8rem; font-size: 1.25rem; }
@@ -172,7 +252,9 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .article-content li + li { margin-top: 0.35rem; }
 .article-content blockquote { margin: 2rem 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent); color: var(--muted); }
 .article-content hr { margin: 2.75rem 0; border: 0; border-top: 1px solid var(--line); }
+.article-content img { display: block; max-width: 100%; height: auto; margin: 2rem auto; }
 
+/* Callout 區塊 */
 .markdown-callout { margin: 2rem 0; padding: 18px 22px; border-left: 4px solid; border-radius: 4px; background: var(--code-background); }
 .markdown-callout > :last-child { margin-bottom: 0; }
 .markdown-callout-title { margin: 0 0 8px; font-weight: 700; font-size: 1.2rem;}
@@ -181,124 +263,58 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .markdown-callout-warning { border-color: #b7791f; background: #fdf4df; }
 .markdown-callout-danger { border-color: #bc3f3f; background: #fbeaea; }
 .markdown-callout-note { border-color: #747982; background: #eff0f2; }
-/* =========================================
-   程式碼區塊美化 (Mac OS Window Style)
-   ========================================= */
 
-/* 1. 大區塊程式碼 (Code Block) */
+/* 出處 Callout ::: cite */
+.markdown-callout-cite { border-left: 4px solid var(--accent); background-color: var(--code-background); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+.markdown-callout-cite .markdown-callout-title { font-weight: 700; color: var(--accent); margin-bottom: 0.4rem; font-size: 0.9rem; }
+.article-content blockquote p.quote-cite { text-align: right; font-size: 0.88rem; color: var(--muted); margin-top: 0.5rem; font-style: normal; }
+
+/* =========================================
+   8. 程式碼區塊美化 (Mac OS Window Style)
+   ========================================= */
 .article-content pre {
-  position: relative;
-  overflow-x: auto;
-  padding: 46px 20px 20px; /* 頂部留白給 Mac 點點 */
-  margin: 2.5rem 0;
-  background-color: #f4f6f3; /* 淺色模式下柔和的背景 */
-  color: #171c1a; /* 淺色模式下的文字顏色 */
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-  
-  /* 用背景漸層畫出 Mac 視窗的紅黃綠三點 */
+  position: relative; overflow-x: auto; padding: 46px 20px 20px; margin: 2.5rem 0;
+  background-color: #f4f6f3; color: #171c1a; border: 1px solid var(--line); border-radius: 12px;
+  font-size: 0.92rem; line-height: 1.6; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
   background-image: 
     radial-gradient(circle at 20px 24px, #ff5f56 6px, transparent 6.5px),
     radial-gradient(circle at 40px 24px, #ffbd2e 6px, transparent 6.5px),
     radial-gradient(circle at 60px 24px, #27c93f 6px, transparent 6.5px);
   background-repeat: no-repeat;
 }
-
-/* 深色模式下的程式碼區塊 */
-:root[data-theme="dark"] .article-content pre {
-  background-color: #111714; /* 深邃的質感黑 */
-  color: #e0e6e2;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* 2. 美化程式碼區塊內的滾動條 */
+:root[data-theme="dark"] .article-content pre { background-color: #111714; color: #e0e6e2; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); }
 .article-content pre::-webkit-scrollbar { height: 8px; }
 .article-content pre::-webkit-scrollbar-track { background: transparent; }
 .article-content pre::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
 .article-content pre::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
 .article-content code { font-family: var(--mono); }
 
-/* 3. 行內程式碼 (Inline Code) 的美化 */
 .article-content :not(pre) > code {
-  padding: 0.15em 0.4em;
-  background-color: var(--code-background);
-  color: var(--accent); /* 用你的主題橘紅色讓重點字跳出來 */
-  font-weight: 500;
-  border-radius: 6px;
-  font-size: 0.88em;
-  border: 1px solid var(--line);
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  padding: 0.15em 0.4em; background-color: var(--code-background); color: var(--accent); 
+  font-weight: 500; border-radius: 6px; font-size: 0.88em; border: 1px solid var(--line);
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
-.article-content img { display: block; max-width: 100%; height: auto; margin: 2rem auto; }
 
+/* 防暴雷 (Spoiler Text) */
+.article-content .spoiler { background-color: var(--ink); color: var(--ink); border-radius: 4px; padding: 0.1em 0.35em; margin: 0 0.15em; cursor: pointer; user-select: none; transition: background-color 0.2s ease, color 0.2s ease; }
+.article-content .spoiler:hover, .article-content .spoiler:focus, .article-content .spoiler:active { background-color: var(--code-background); color: var(--ink); user-select: text; }
 
-/* 8. RWD 響應式設定 */
+/* =========================================
+   9. RWD & 頁面過渡動畫
+   ========================================= */
 @media (max-width: 620px) {
   .site-header, main, .site-footer { width: min(calc(100% - 32px), var(--page-width)); }
   .site-header { min-height: 66px; }
   .post-card { grid-template-columns: 1fr auto; gap: 7px 16px; padding: 22px 12px; }
   .post-card h3 { grid-column: 1 / -1; grid-row: 1; }
-  .post-date { grid-row: 2; }
-  .post-tags { grid-row: 2; }
+  .post-date, .post-tags { grid-row: 2; }
   .post-card p { grid-column: 1 / -1; margin: 3px 0 0; }
   .article-shell { width: min(calc(100% - 32px), 760px); }
   .tags-shell { width: min(calc(100% - 32px), 900px); }
 }
 
-/* =========================================
-   頁面切換過渡動畫 (Page Transitions)
-   ========================================= */
-
-/* 1. 前端黑科技：原生跨頁面過渡支援 (Chrome 126+ 等現代瀏覽器自動支援) */
-@view-transition {
-  navigation: auto;
-}
-
-/* 2. 所有瀏覽器通用的進入動畫 (載入頁面時整頁淡入) */
-body {
-  animation: pageFadeIn 0.5s ease-out forwards;
-}
-
-/* 3. 準備離開頁面時的狀態 (由 JS 觸發) */
-body.is-leaving {
-  /* 稍微縮小並淡出，營造深邃感 */
-  animation: pageFadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes pageFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes pageFadeOut {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(-10px) scale(0.98); }
-}
-
-/* =========================================
-   防暴雷 (Spoiler Text) 樣式
-   ========================================= */
-.article-content .spoiler {
-  background-color: var(--ink);
-  color: var(--ink);
-  border-radius: 4px;
-  padding: 0.1em 0.35em;
-  margin: 0 0.15em;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* 滑鼠懸浮、獲得焦點或點擊時顯示內容 */
-.article-content .spoiler:hover,
-.article-content .spoiler:focus,
-.article-content .spoiler:active {
-  background-color: var(--code-background);
-  color: var(--ink);
-  user-select: text;
-}
+@view-transition { navigation: auto; }
+body { animation: pageFadeIn 0.5s ease-out forwards; }
+body.is-leaving { animation: pageFadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pageFadeOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-10px) scale(0.98); } }

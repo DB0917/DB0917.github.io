@@ -1,13 +1,8 @@
-/*
-  在這裡放你的自訂樣式。
-  例如：
-  :root { --accent: #1565c0; }
-  .intro h1 { color: #20302a; }
-*/
-
 /* =========================================
-   歸檔頁面 (Archive Layout)
+   自訂樣式庫 (Custom Styles)
    ========================================= */
+
+/* 歸檔頁面外層容器 */
 .archive-shell {
   max-width: var(--max-width, 1000px);
   margin: 0 auto;
@@ -20,7 +15,7 @@
   gap: 3rem;
 }
 
-/* 桌面版雙欄佈局：左側文章佔 2 份，右側標籤佔 1 份 */
+/* 桌面版雙欄佈局：左側文章 (2.5) / 右側標籤 (1) */
 @media (min-width: 800px) {
   .archive-container {
     grid-template-columns: 2.5fr 1fr;
@@ -34,23 +29,31 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--muted);
-  margin: 3rem 0 1.5rem;
+  margin: 3rem 0 0rem;
   border-bottom: 2px dashed var(--line);
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 }
-.archive-year:first-child { margin-top: 0; }
+.archive-year:first-child { 
+  margin-top: 1; 
+}
 
-/* 側邊欄與標籤 */
+/* =========================================
+   歸檔頁面：側邊欄與標籤
+   ========================================= */
 .sidebar-sticky {
   position: sticky;
-  top: 6rem; /* 滑動時停留在距離螢幕上方 6rem 處 */
+  top: 6rem; /* 配合導覽列高度，滑動時吸附在頂部 */
   background: var(--code-background);
   padding: 1.5rem;
   border-radius: 12px;
   border: 1px solid var(--line);
 }
 
-.sidebar-sticky h2 { margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 1.25rem; }
+.sidebar-sticky h2 { 
+  margin-top: 0.5rem; 
+  margin-bottom: 1.5rem; 
+  font-size: 1.25rem; 
+}
 
 .sidebar-tag-list {
   display: flex;
@@ -69,14 +72,14 @@
   transition: all 0.2s ease;
 }
 
-/* 標籤被選中或懸浮時的狀態 */
-.sidebar-tag:hover, .sidebar-tag.is-active {
+.sidebar-tag:hover, 
+.sidebar-tag.is-active {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--code-background);
 }
 
-/* 重置按鈕 */
+/* 重置篩選按鈕 */
 .reset-btn {
   margin-top: 1.5rem;
   width: 100%;
@@ -88,4 +91,7 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.reset-btn:hover { background: var(--line); color: var(--ink); }
+.reset-btn:hover { 
+  background: var(--line); 
+  color: var(--ink); 
+}

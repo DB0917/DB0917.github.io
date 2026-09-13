@@ -1,9 +1,9 @@
 ---
 title: About Me
-date: 2026-09-11
+date: 2008-09-17
 tags: 自我介紹
 description: 關於我
-banner: assets/images/cat.gif
+banner: none
 ---
 
 ## 學歷

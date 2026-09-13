@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="DB0917 Blog 的文章歸檔與分類。" />
     <title>歸檔 | DB0917</title>
+    <script src="assets/js/theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -21,37 +22,26 @@
       </nav>
     </header>
 
-    <!-- 改用新的 Archive 雙欄容器 -->
     <main class="archive-shell">
       <div class="archive-container">
-        
-        <!-- 左側：年份時間軸 (Timeline) -->
         <section class="archive-timeline-section" aria-labelledby="archive-title">
           <p class="eyebrow">ARCHIVE</p>
           <h1 id="archive-title">文章歸檔</h1>
-          
-          <!-- 這裡放置由 JS 產生的文章 -->
           <div id="archive-list" class="archive-list" aria-live="polite">
             <p class="loading">正在載入文章...</p>
           </div>
         </section>
 
-        <!-- 右側：標籤分類 (Tags Sidebar) -->
         <aside class="archive-sidebar">
           <div class="sidebar-sticky">
             <p class="eyebrow">TAGS</p>
             <h2>分類標籤</h2>
-            
-            <!-- 這裡放置由 JS 產生的標籤 -->
             <div id="sidebar-tag-list" class="sidebar-tag-list">
               <p class="loading">載入中...</p>
             </div>
-            
-            <!-- 重置篩選按鈕 (預設隱藏) -->
             <button id="reset-filter" class="reset-btn" style="display: none;">顯示所有文章</button>
           </div>
         </aside>
-
       </div>
     </main>
 
