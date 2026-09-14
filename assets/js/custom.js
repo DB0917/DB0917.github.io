@@ -1,6 +1,6 @@
 window.BLOG_CONFIG = {
   homeBanner: {
-    src: "random",
+    src: "assets/images/banners/3.jpg",
     alt: "首頁橫幅的替代文字",
     credit: "圖片來源：[マンガUP! - 灰宮先輩は怖くてかわいい](https://www.manga-up.com/titles/1626)" /* 👈 新增這一行，填寫你的出處 */
   }
