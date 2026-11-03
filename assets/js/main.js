@@ -222,7 +222,12 @@ function renderInlineMarkdown(text) {
       const targetColor = themeVars.includes(color.toLowerCase()) ? `var(--${color})` : color;
       return `<span style="color: ${targetColor}; font-weight: 500;">${content}</span>`;
     })
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)(?:\{\s*width\s*=\s*([0-9]+(?:\.[0-9]+)?(?:px|%)?)\s*\})?/g, (match, alt, source, width) => {
+      // 數字預設為 px；百分比與 px 皆可使用。max-width 由 CSS 保證手機不會溢出。
+      const imageWidth = width ? (/[a-z%]+$/i.test(width) ? width : `${width}px`) : "";
+      const style = imageWidth ? ` style="width: min(${imageWidth}, 100%);"` : "";
+      return `<img src="${source}" alt="${alt}" loading="lazy"${style}>`;
+    })
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, title, url) => {
       const isExternal = /^https?:\/\//i.test(url);
       const target = isExternal ? ' target="_blank" rel="noreferrer"' : '';

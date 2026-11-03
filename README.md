@@ -27,6 +27,21 @@
 - 首頁：將圖片放到 `assets/images/` 後，在 `assets/js/custom.js` 的 `homeBanner` 設定填入圖片路徑。橫幅會顯示在首頁介紹文字後方。
 - 文章頁：在文章最上方資訊區塊加入 `banner: assets/images/your-banner.jpg`；可選擇加入 `bannerAlt:` 供圖片替代文字使用。橫幅會顯示在文章標題文字後方。
 
+## 在文章中插入圖片
+
+將圖片放到 `assets/images/` 後，可在 Markdown 中使用：
+
+```md
+![圖片說明](assets/images/example.jpg)
+```
+
+可在圖片後指定寬度；支援像素或百分比，且圖片在窄螢幕會自動縮小：
+
+```md
+![圖片說明](assets/images/example.jpg){ width=600 }
+![圖片說明](assets/images/example.jpg){ width=60% }
+```
+
 文章透過瀏覽器讀取 Markdown，網站內建常用的 Markdown 排版支援；請用本機伺服器預覽或部署至 GitHub Pages，不要直接雙擊開啟 HTML。
 
 ## 數學公式（LaTeX）
