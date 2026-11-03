@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DB0917 推薦的友站與創作者。" />
+    <title>友站 | DB0917</title>
+    <script src="assets/js/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="回到首頁">DB0917<span>.</span></a>
+      <nav aria-label="主要導覽">
+        <a href="./">文章</a>
+        <a href="tags.html">歸檔</a>
+        <a class="is-active" href="friends.html">友站</a>
+        <a href="post.html?slug=welcome">關於</a>
+      </nav>
+    </header>
+
+    <main class="friends-shell">
+      <section class="friends-intro" aria-labelledby="friends-title">
+        <p class="eyebrow">FRIENDS &amp; FAVORITES</p>
+        <h1 id="friends-title">友站列表</h1>
+        <p>一些值得逛逛的角落。每個人都在自己的地方，留下有趣的東西。</p>
+      </section>
+
+      <section aria-labelledby="friends-list-title">
+        <div class="section-heading">
+          <h2 id="friends-list-title">友站</h2>
+          <span id="friend-count" aria-live="polite"></span>
+        </div>
+        <div id="friends-list" class="friends-list" aria-live="polite">
+          <p class="loading">正在載入友站...</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">© <span id="year"></span> DB0917</footer>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/main.js?v=20261103-2"></script>
+  </body>
+</html>

@@ -190,6 +190,42 @@ async function renderArchivePage() {
   }
 }
 
+async function renderFriendsList() {
+  const list = document.querySelector("#friends-list");
+  if (!list) return;
+
+  try {
+    const response = await fetch("data/friends.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("友站列表讀取失敗");
+    const friends = await response.json();
+    if (!Array.isArray(friends)) throw new Error("友站列表格式錯誤");
+
+    document.querySelector("#friend-count").textContent = `${friends.length} SITES`;
+    if (!friends.length) {
+      list.innerHTML = '<p class="friends-empty">友站列表準備中。歡迎之後再來逛逛。</p>';
+      return;
+    }
+
+    list.innerHTML = friends.map((friend) => {
+      const name = escapeHtml(friend.name || "未命名友站");
+      const description = escapeHtml(friend.description || "");
+      const url = String(friend.url || "");
+      if (!/^https?:\/\//i.test(url)) return "";
+      const host = escapeHtml(new URL(url).hostname);
+      return `
+        <a class="friend-card" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">
+          <span class="friend-card-mark" aria-hidden="true">↗</span>
+          <p class="friend-card-url">${host}</p>
+          <h2>${name}</h2>
+          <p>${description}</p>
+        </a>
+      `;
+    }).join("");
+  } catch (error) {
+    list.innerHTML = '<p class="error">友站目前無法載入，請稍後再試。</p>';
+  }
+}
+
 function splitFrontmatter(markdown) {
   const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
   if (!match) return { metadata: {}, content: markdown };
@@ -391,6 +427,7 @@ async function renderArticle() {
 renderHomeBanner();
 renderPostList();
 renderArchivePage();
+renderFriendsList();
 renderArticle();
 
 if ('scrollRestoration' in history) {

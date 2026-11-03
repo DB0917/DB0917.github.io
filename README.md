@@ -42,6 +42,22 @@
 ![圖片說明](assets/images/example.jpg){ width=60% }
 ```
 
+## 新增友站
+
+編輯 `data/friends.json`，每個友站依下列格式新增一筆資料：
+
+```json
+[
+  {
+    "name": "友站名稱",
+    "url": "https://example.com",
+    "description": "一句簡短介紹。"
+  }
+]
+```
+
+友站會自動顯示在 `friends.html`，並以新分頁開啟。
+
 文章透過瀏覽器讀取 Markdown，網站內建常用的 Markdown 排版支援；請用本機伺服器預覽或部署至 GitHub Pages，不要直接雙擊開啟 HTML。
 
 ## 數學公式（LaTeX）

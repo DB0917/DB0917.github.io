@@ -144,7 +144,26 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 .post-tags { text-align: right; }
 
 /* =========================================
-   5. 關於區塊與 Footer
+   5. 友站列表
+   ========================================= */
+.friends-shell { padding: clamp(64px, 10vw, 120px) 0 112px; animation: fadeUp 0.8s ease-out forwards; }
+.friends-intro { max-width: 680px; margin-bottom: clamp(52px, 8vw, 88px); }
+.friends-intro h1 { font-size: clamp(3rem, 7vw, 5.6rem); }
+.friends-intro > p:last-child { max-width: 510px; margin: 24px 0 0; color: var(--muted); font-size: 1.05rem; }
+.friends-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 16px; }
+.friend-card { position: relative; min-height: 230px; padding: 30px; border: 1px solid var(--line); border-radius: 8px; background: color-mix(in srgb, var(--paper) 88%, transparent); color: var(--ink); text-decoration: none; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+.friend-card::before { content: ""; position: absolute; inset: auto -20% -55% auto; width: 180px; height: 180px; border-radius: 50%; background: var(--accent-glow); transition: transform 0.4s ease; }
+.friend-card:hover { transform: translateY(-6px); border-color: var(--accent); background: var(--card-hover); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08); }
+.friend-card:hover::before { transform: scale(1.35); }
+.friend-card-url { position: relative; margin: 0 0 40px; color: var(--muted); font: 0.72rem var(--mono); overflow-wrap: anywhere; }
+.friend-card h2 { position: relative; margin: 0 28px 10px 0; font-size: 1.45rem; }
+.friend-card > p:last-child { position: relative; margin: 0; color: var(--muted); font-size: 0.94rem; }
+.friend-card-mark { position: absolute; top: 26px; right: 28px; color: var(--accent); font: 1.4rem/1 var(--mono); transition: transform 0.3s ease; }
+.friend-card:hover .friend-card-mark { transform: translate(3px, -3px); }
+.friends-empty { grid-column: 1 / -1; margin: 0; padding: 48px 0; color: var(--muted); border-bottom: 1px solid var(--line); }
+
+/* =========================================
+   6. 關於區塊與 Footer
    ========================================= */
 .about { padding: 72px 0; border-top: 1px solid var(--line); animation: fadeUp 0.8s ease-out 0.4s backwards; }
 .about h2 { margin: 0 0 14px; font-size: clamp(1.7rem, 4vw, 2.4rem); }
@@ -305,12 +324,15 @@ h1 { max-width: 680px; margin: 0; font-size: clamp(3rem, 8vw, 6.7rem); font-weig
 @media (max-width: 620px) {
   .site-header, main, .site-footer { width: min(calc(100% - 32px), var(--page-width)); }
   .site-header { min-height: 66px; }
+  nav, .header-actions { gap: 14px; }
+  nav a, .back-link { font-size: 0.82rem; }
   .post-card { grid-template-columns: 1fr auto; gap: 7px 16px; padding: 22px 12px; }
   .post-card h3 { grid-column: 1 / -1; grid-row: 1; }
   .post-date, .post-tags { grid-row: 2; }
   .post-card p { grid-column: 1 / -1; margin: 3px 0 0; }
   .article-shell { width: min(calc(100% - 32px), 760px); }
   .tags-shell { width: min(calc(100% - 32px), 900px); }
+  .friends-list { grid-template-columns: 1fr; }
 }
 
 @view-transition { navigation: auto; }
