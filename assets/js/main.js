@@ -207,17 +207,33 @@ async function renderFriendsList() {
     }
 
     list.innerHTML = friends.map((friend) => {
-      const name = escapeHtml(friend.name || "未命名友站");
+      const rawName = String(friend.name || "未命名友站");
+      const name = escapeHtml(rawName);
       const description = escapeHtml(friend.description || "");
       const url = String(friend.url || "");
       if (!/^https?:\/\//i.test(url)) return "";
-      const host = escapeHtml(new URL(url).hostname);
+
+      let host;
+      try {
+        host = escapeHtml(new URL(url).hostname);
+      } catch {
+        return "";
+      }
+
+      const avatarUrl = String(friend.avatar || "");
+      const hasAvatar = /^(?:https?:\/\/|assets\/)/i.test(avatarUrl);
+      const initial = escapeHtml(rawName.trim().charAt(0).toUpperCase() || "?");
       return `
         <a class="friend-card" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">
           <span class="friend-card-mark" aria-hidden="true">↗</span>
+          <div class="friend-profile">
+            <span class="friend-avatar" aria-hidden="true">${initial}${hasAvatar ? `<img src="${escapeHtml(avatarUrl)}" alt="" loading="lazy">` : ""}</span>
+            <div>
+              <h2 class="friend-card-title">${name}</h2>
+              <p class="friend-card-subtitle">${description}</p>
+            </div>
+          </div>
           <p class="friend-card-url">${host}</p>
-          <h2>${name}</h2>
-          <p>${description}</p>
         </a>
       `;
     }).join("");

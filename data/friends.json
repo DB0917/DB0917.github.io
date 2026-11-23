@@ -2,6 +2,13 @@
   {
     "name": "Wonderhoi",
     "url": "https://linushuan.github.io/blog/ani/",
-    "description": "Wonderhoi's Realm"
+    "description": "Wonderhoi's Realm",
+    "avatar": "https://linushuan.github.io/blog/ani/icon.png"
+  },
+  {
+    "name": "Conor Kuo",
+    "url": "https://cnrkuo.com/",
+    "description": "Proud owner of a Chromebook w/o ChromeOS.",
+    "avatar": "https://cnrkuo.com/profile.png"
   }
 ]

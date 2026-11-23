@@ -51,12 +51,13 @@
   {
     "name": "友站名稱",
     "url": "https://example.com",
-    "description": "一句簡短介紹。"
+    "description": "一句簡短介紹。",
+    "avatar": "assets/images/friend-avatar.jpg"
   }
 ]
 ```
 
-友站會自動顯示在 `friends.html`，並以新分頁開啟。
+`avatar` 為選填；可填入 `assets/images/` 內的圖片或 HTTPS 圖片網址。沒有提供時，卡片會自動以友站名稱的第一個字作為圓形頭像。友站會自動顯示在 `friends.html`，並以新分頁開啟。
 
 文章透過瀏覽器讀取 Markdown，網站內建常用的 Markdown 排版支援；請用本機伺服器預覽或部署至 GitHub Pages，不要直接雙擊開啟 HTML。
 
